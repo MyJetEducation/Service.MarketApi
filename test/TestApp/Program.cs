@@ -1,19 +1,21 @@
 ﻿using System;
-using ProtoBuf.Grpc.Client;
+using System.Threading.Tasks;
 
 namespace TestApp
 {
 	internal class Program
 	{
-		private static void Main()
+		private static async Task Main(string[] args)
 		{
-			GrpcClientFactory.AllowUnencryptedHttp2 = true;
-
-			Console.Write("Press enter to start");
+			Console.WriteLine("Press enter to start.");
 			Console.ReadLine();
 
-			Console.WriteLine("End");
+
+
+			Console.WriteLine("Press enter to exit");
 			Console.ReadLine();
+
+			Console.WriteLine("End of app");
 		}
 	}
 }
