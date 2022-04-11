@@ -1,7 +1,7 @@
 ﻿using MyJetWallet.Sdk.Service;
 using MyYamlParser;
 
-namespace Service.WalletApiEducation.MarketApi.Settings
+namespace Service.WalletApi.MarketApi.Settings
 {
 	public class SettingsModel
 	{
