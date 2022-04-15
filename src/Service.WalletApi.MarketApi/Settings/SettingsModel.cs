@@ -31,5 +31,8 @@ namespace Service.WalletApi.MarketApi.Settings
 
 		[YamlProperty("WalletApiEducation.MarketServiceUrl")]
 		public string MarketServiceUrl { get; set; }
+
+		[YamlProperty("WalletApiEducation.UserTokenAccountServiceUrl")]
+		public string UserTokenAccountServiceUrl { get; set; }
 	}
 }

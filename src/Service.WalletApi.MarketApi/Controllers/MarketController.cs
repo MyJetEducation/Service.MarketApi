@@ -9,6 +9,8 @@ using NSwag.Annotations;
 using Service.Grpc;
 using Service.Market.Grpc;
 using Service.Market.Grpc.Models;
+using Service.UserTokenAccount.Grpc;
+using Service.UserTokenAccount.Grpc.Models;
 using Service.WalletApi.MarketApi.Constants;
 using Service.WalletApi.MarketApi.Controllers.Contracts;
 using Service.WalletApi.MarketApi.Mappers;
@@ -25,8 +27,14 @@ namespace Service.WalletApi.MarketApi.Controllers
 	public class MarketController : ControllerBase
 	{
 		private readonly IGrpcServiceProxy<IMarketService> _marketService;
+		private readonly IGrpcServiceProxy<IUserTokenAccountService> _userTokenAccountService;
 
-		public MarketController(IGrpcServiceProxy<IMarketService> marketService) => _marketService = marketService;
+		public MarketController(IGrpcServiceProxy<IMarketService> marketService, 
+			IGrpcServiceProxy<IUserTokenAccountService> userTokenAccountService)
+		{
+			_marketService = marketService;
+			_userTokenAccountService = userTokenAccountService;
+		}
 
 		[HttpPost("tokens")]
 		[SwaggerResponse(HttpStatusCode.OK, typeof (DataResponse<UserTokenAmountResponse>), Description = "Ok")]
@@ -36,7 +44,7 @@ namespace Service.WalletApi.MarketApi.Controllers
 			if (userId == null)
 				return StatusResponse.Error(ResponseCode.UserNotFound);
 
-			TokenAmountGrpcResponse response = await _marketService.Service.GetTokenAmountAsync(new GetTokenAmountGrpcRequest
+			AccountGrpcResponse response = await _userTokenAccountService.Service.GetAccountAsync(new GetAccountGrpcRequest
 			{
 				UserId = userId
 			});
@@ -85,6 +93,12 @@ namespace Service.WalletApi.MarketApi.Controllers
 			{
 				if (response.InsufficientAccount)
 					return StatusResponse.Error(MarketResponseCodes.NotEnoughTokens);
+
+				if (response.ProductAlreadyPurchased)
+					return StatusResponse.Error(MarketResponseCodes.ProductAlreadyPurchased);
+
+				if (response.ProductNotAvailable)
+					return StatusResponse.Error(MarketResponseCodes.ProductNotAvailable);
 
 				if (response.Successful)
 					return StatusResponse.Ok();

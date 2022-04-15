@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MyJetWallet.ApiSecurityManager.Autofac;
 using MyJetWallet.Sdk.RestApiTrace;
 using Service.Market.Client;
+using Service.UserTokenAccount.Client;
 
 namespace Service.WalletApi.MarketApi.Modules
 {
@@ -13,6 +14,7 @@ namespace Service.WalletApi.MarketApi.Modules
 			builder.RegisterEncryptionServiceClient();
 
 			builder.RegisterMarketClient(Program.Settings.MarketServiceUrl, Program.LoggerFactory.CreateLogger(typeof (MarketClientFactory)));
+			builder.RegisterUserTokenAccountClient(Program.Settings.UserTokenAccountServiceUrl, Program.LoggerFactory.CreateLogger(typeof(UserTokenAccountClientFactory)));
 
 			if (Program.Settings.EnableApiTrace)
 			{
