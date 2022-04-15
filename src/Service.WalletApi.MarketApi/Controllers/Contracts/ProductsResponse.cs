@@ -12,5 +12,7 @@ namespace Service.WalletApi.MarketApi.Controllers.Contracts
 		public MarketProductCategory Category { get; set; }
 
 		public decimal? Price { get; set; }
+
+		public int Priority { get; set; }
 	}
 }

@@ -9,7 +9,8 @@ namespace Service.WalletApi.MarketApi.Mappers
 		{
 			Product = model.Product,
 			Category = model.Category,
-			Price = model.Price
+			Price = model.Price,
+			Priority = model.Priority
 		};
 	}
 }
